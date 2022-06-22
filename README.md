@@ -2,16 +2,18 @@
 
 This repository contains the Packer and Terraform HCL definitions for a basic end-to-end demonstration.
 
-
 ### Pre-Requisites
-- Create a Service Principal for the target Organization in portal.cloud.hashicorp.com, Access Control (IAM)
+- Create a Service Principal for the target Organization in portal.cloud.hashicorp.com, Access Control (IAM).
+  - Capture the Client ID and Secret
+- Create an AWS IAM User/Access Keys with the "AdministratorAccess" permission set in the target AWS account.
+  - Capture the Access Key ID and Secret.
 - Create a Variable Set containing the following Environment variables: 
   - AWS_ACCESS_KEY_ID
   - AWS_SECRET_ACCESS_KEY (sensitive)
   - HCP_CLIENT_ID
   - HCP_CLIENT_SECRET (sensitive)
 - Create the HCP-Packer Run Task in your Terraform Cloud Organization
-  - Retrieve the "Endpoint URL" and "HMAC Key" from the HCP Packer page under portal.cloud.hashicorp.com
+  - Retrieve the "Endpoint URL" and "HMAC Key" from the HCP Packer / "Integrate with Terraform Cloud" page under portal.cloud.hashicorp.com
 
 ### Packer
 
