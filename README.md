@@ -8,7 +8,7 @@ This repository contains the Packer and Terraform HCL definitions for a basic en
   - Capture the Client ID and Secret
 - Create an AWS IAM User/Access Keys with the "AdministratorAccess" permission set in the target AWS account.
   - Capture the Access Key ID and Secret.
-- Create a Variable Set containing the following Environment variables: 
+- Create a Variable Set in Terraform Cloud containing the following Environment variables: 
   - AWS_ACCESS_KEY_ID
   - AWS_SECRET_ACCESS_KEY (sensitive)
   - HCP_CLIENT_ID
