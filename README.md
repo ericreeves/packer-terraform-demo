@@ -3,6 +3,7 @@
 This repository contains the Packer and Terraform HCL definitions for a basic end-to-end demonstration.
 
 ### Pre-Requisites
+- Create or access an existing Terraform Cloud Organization with "Team & Governance Plan" features enabled.
 - Create a Service Principal for the target Organization in portal.cloud.hashicorp.com, Access Control (IAM).
   - Capture the Client ID and Secret
 - Create an AWS IAM User/Access Keys with the "AdministratorAccess" permission set in the target AWS account.
