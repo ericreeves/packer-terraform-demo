@@ -34,3 +34,6 @@ terraform.rc
 
 # Credentials file used for demo
 credentials
+**/gcp-key.json
+**/id_rsa.pub
+**/id_rsa

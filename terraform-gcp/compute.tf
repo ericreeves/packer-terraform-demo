@@ -2,12 +2,12 @@
 # Instances
 #############
 data "hcp_packer_iteration" "ubuntu" {
-  bucket_name = "packer-terraform-demo"
+  bucket_name = "acme-webapp"
   channel     = "production"
 }
 
 data "hcp_packer_image" "ubuntu_gcp" {
-  bucket_name    = "packer-terraform-demo"
+  bucket_name    = "acme-webapp"
   cloud_provider = "gce"
   iteration_id   = data.hcp_packer_iteration.ubuntu.ulid
   region         = var.zone
