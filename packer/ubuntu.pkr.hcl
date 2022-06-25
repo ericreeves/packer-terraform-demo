@@ -4,6 +4,10 @@ packer {
       version = ">= 1.0.1"
       source  = "github.com/hashicorp/amazon"
     }
+    googlecompute = {
+      version = ">= 0.0.1"
+      source = "github.com/hashicorp/googlecompute"
+    }
   }
 }
 
@@ -30,6 +34,13 @@ source "amazon-ebs" "basic-example-east" {
   ami_name       = "packer_AWS_{{timestamp}}_v${var.version}"
 }
 
+source "googlecompute" "basic-example" {
+  project_id = "eric-terraform"
+  source_image = "ubuntu-2004-focal-v20220615"
+  ssh_username = "ubuntu"
+  zone = "us-central1-c"
+}
+
 build {
 
   hcp_packer_registry {
@@ -50,6 +61,7 @@ Some nice description about the image being published to HCP Packer Registry.
   }
 
   sources = [
+    "sources.googlecompute.basic-example",
     "source.amazon-ebs.basic-example-east"
   ]
 
