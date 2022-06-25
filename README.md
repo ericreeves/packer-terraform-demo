@@ -46,3 +46,6 @@ This repository contains the Packer and Terraform HCL definitions for a basic en
 - packer build ubuntu.pkr.hcl
 - Update Channel to latest image
 - terraform apply
+
+### Various repositories were borrowed from to construct this demo.
+- https://github.com/brokedba/terraform-examples
