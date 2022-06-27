@@ -1,6 +1,6 @@
-#
+#---------------------------------------------------------------------------------------
 # Required Providers
-#
+#---------------------------------------------------------------------------------------
 provider "hcp" {}
 
 provider "google" {
@@ -9,12 +9,8 @@ provider "google" {
   region  = var.region
   zone    = var.zone
 }
-#####################  
-# PROJECT DATA SOURCE
-#####################
 
 data "google_client_config" "current" {
-
 }
 #variable "project_id" {
 #  default = data.google_client_config.current.project 
