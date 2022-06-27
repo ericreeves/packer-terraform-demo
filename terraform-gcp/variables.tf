@@ -1,11 +1,10 @@
-##############################################################################
+#--------------------------------------------------------------------------------------
 # Variables File
-#
-# Here is where we store the default values for all the variables used in our
-# Terraform code. If you create a variable with no default, the user will be
-# prompted to enter it (or define it via config file or command line flags.)
+#--------------------------------------------------------------------------------------
 
+#--------------------------------------------------------------------------------------
 # GCP Service account region and authentication 
+#--------------------------------------------------------------------------------------
 variable  "gcp_credentials"{
   description = "Service Account JSON Key File"
   default = "gcp-key.json"
@@ -14,6 +13,7 @@ variable  "gcp_credentials"{
 variable "project" {
   default = "eric-terraform"
 }
+
 variable "region" {
     default = "us-central1"
 }
@@ -21,7 +21,10 @@ variable "region" {
 variable "zone" {
     default = "us-central1-c"
 }
-# VPC INFO
+
+#--------------------------------------------------------------------------------------
+# VPC
+#--------------------------------------------------------------------------------------
     variable "vnet_name" {
       default = "terraform-network"
     }
@@ -30,7 +33,9 @@ variable "zone" {
       default = "192.168.0.0/16"
     }
 
-# SUBNET INFO
+#--------------------------------------------------------------------------------------
+# Subnets
+#--------------------------------------------------------------------------------------
     variable "subnet_name"{
       default = "terraform-subnet" 
       }
@@ -58,7 +63,9 @@ variable "admin" {
   default  = "ubuntu"
 }
 
-# VNIC INFO
+#--------------------------------------------------------------------------------------
+# VNic Configuration
+#--------------------------------------------------------------------------------------
         variable "private_ip" {
         default = "192.168.10.51"
       }
@@ -69,8 +76,9 @@ variable "hostname" {
 }
   
 
-# COMPUTE INSTANCE INFO
-
+#--------------------------------------------------------------------------------------
+# Compute Instance
+#--------------------------------------------------------------------------------------
       variable "instance_name" {
         default = "terraform-webapp"
       }

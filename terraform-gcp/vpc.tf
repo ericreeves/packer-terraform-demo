@@ -1,6 +1,6 @@
-############################
-# SERVICE ACCOUNT (OPTIONAL)
-############################
+#---------------------------------------------------------------------------------------
+# Service Account (optional)
+#---------------------------------------------------------------------------------------
 # Note: The user running terraform needs to have the IAM Admin role assigned to them before you can do this.
 # resource "google_service_account" "instance_admin" { 
 #  account_id   = "instance-admin"
@@ -13,19 +13,18 @@
 #    "serviceAccount:${google_service_account.instance_admin.email}"
 #  ]
 
-#################
+#---------------------------------------------------------------------------------------
 # VPC
-#################
-
+#---------------------------------------------------------------------------------------
 resource "google_compute_network" "terra_vpc" {
     project   = data.google_client_config.current.project 
     name = "terra-vpc"
     auto_create_subnetworks = false
     }
 
-#################
-# SUBNET
-#################
+#---------------------------------------------------------------------------------------
+# Subnet
+#---------------------------------------------------------------------------------------
 resource "google_compute_subnetwork" "terra_sub" {
   name          = "terra-sub"
   ip_cidr_range = var.subnet_cidr
@@ -43,12 +42,10 @@ resource "google_compute_subnetwork" "terra_sub" {
                 range_name    = "subnet-01-secondary-01"
                 ip_cidr_range = "192.168.64.0/24"
             }
-        
-
 }
-######################
+#---------------------------------------------------------------------------------------
 # Firewall
-######################    
+#---------------------------------------------------------------------------------------
 # web network tag
 resource "google_compute_firewall" "web-server" {
   project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id

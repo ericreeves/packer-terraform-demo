@@ -1,18 +1,29 @@
-#############
-# Instances
-#############
+#---------------------------------------------------------------------------------------
+# HCP Packer Configuration
+#---------------------------------------------------------------------------------------
+variable "hcp_bucket_name" {
+  default = "acme-base"
+}
+
+variable "hcp_channel" {
+  default = "production"
+}
+
 data "hcp_packer_iteration" "ubuntu" {
-  bucket_name = "acme-webapp"
-  channel     = "production"
+  bucket_name = var.hcp_bucket_name
+  channel     = var.hcp_channel
 }
 
 data "hcp_packer_image" "ubuntu_gcp" {
-  bucket_name    = "acme-webapp"
+  bucket_name    = "acme-base"
   cloud_provider = "gce"
   iteration_id   = data.hcp_packer_iteration.ubuntu.ulid
   region         = var.zone
 }
 
+#---------------------------------------------------------------------------------------
+# Instances
+#---------------------------------------------------------------------------------------
  resource "google_compute_instance" "terra_instance" {
   name     = var.instances_name
   hostname = var.hostname
@@ -36,10 +47,10 @@ data "hcp_packer_image" "ubuntu_gcp" {
  }
  
   depends_on = [data.google_client_config.current]
-######################
-# IMAGE
-######################
 
+#---------------------------------------------------------------------------------------
+# Computer Image
+#---------------------------------------------------------------------------------------
   boot_disk {
     initialize_params {
       image = data.hcp_packer_image.ubuntu_gcp.cloud_image_id
@@ -62,9 +73,9 @@ scheduling {
  tags = ["web-server"]
 } 
  
-######################
-# ADDRESS
-######################
+#---------------------------------------------------------------------------------------
+# IP Address
+#---------------------------------------------------------------------------------------
 # Reserving a static internal IP address 
 resource "google_compute_address" "internal_reserved_subnet_ip" {
   name         = "internal-address"
