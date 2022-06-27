@@ -5,7 +5,7 @@ packer {
   required_plugins {
     googlecompute = {
       version = ">= 0.0.1"
-      source = "github.com/hashicorp/googlecompute"
+      source  = "github.com/hashicorp/googlecompute"
     }
   }
 }
@@ -45,9 +45,9 @@ variable "gce_source_image" {
 }
 
 source "googlecompute" "acme-base" {
-  project_id = var.gcp_project_id
+  project_id   = var.gcp_project_id
   source_image = var.gce_source_image
-  zone = var.gce_zone
+  zone         = var.gce_zone
   # The AWS Ubuntu image uses user "ubuntu", so we shall do the same here
   ssh_username = "ubuntu"
 }

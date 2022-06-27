@@ -1,15 +1,19 @@
-# output "ubuntu_iteration" {
-#   value = data.hcp_packer_iteration.ubuntu
-# }
+output "gcp-project" {
+  value = data.google_client_config.current.project
+}
 
-# output "ubuntu_us_east_2" {
-#   value = data.hcp_packer_image.ubuntu_us_east_2
-# }
+output "acme-webapp-ip" {
+  value = google_compute_instance.terra_instance.network_interface.0.access_config.0.nat_ip
+}
 
-# output "catapp_url" {
-#   value = "http://${aws_eip.hashicat.public_dns}"
-# }
+output "acme-webapp-url" {
+  value = "http://${google_compute_instance.terra_instance.network_interface.0.access_config.0.nat_ip}"
+}
 
-# output "catapp_ip" {
-#   value = "http://${aws_eip.hashicat.public_ip}"
-# }
+output "ubuntu_iteration" {
+  value = data.hcp_packer_iteration.ubuntu
+}
+
+output "ubuntu_gcp" {
+  value = data.hcp_packer_image.ubuntu_us_east_2
+}

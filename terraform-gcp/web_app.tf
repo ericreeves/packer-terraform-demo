@@ -24,55 +24,55 @@ data "hcp_packer_image" "ubuntu_gcp" {
 #---------------------------------------------------------------------------------------
 # Instances
 #---------------------------------------------------------------------------------------
- resource "google_compute_instance" "terra_instance" {
-  name     = var.instances_name
-  hostname = var.hostname
-  project  = data.google_client_config.current.project
-  zone     = var.zone 
+resource "google_compute_instance" "terra_instance" {
+  name         = var.instances_name
+  hostname     = var.hostname
+  project      = data.google_client_config.current.project
+  zone         = var.zone
   machine_type = var.vm_type
-  
+
   metadata = {
-   ssh-keys = "${var.admin}:${file("id_rsa.pub")}"   # Change Me
-    # startup-script        = ("${file(var.user_data)}")
-  #  startup-script-custom = "stdlib::info Hello World"
+    ssh-keys = "${var.admin}:${file("id_rsa.pub")}"
   }
+
   network_interface {
     network            = google_compute_network.terra_vpc.self_link
     subnetwork         = google_compute_subnetwork.terra_sub.self_link
-    subnetwork_project = data.google_client_config.current.project 
+    subnetwork_project = data.google_client_config.current.project
     network_ip         = var.private_ip
-  access_config {
+
+    access_config {
       // Include this section to give the VM an external ip address
-   }
- }
- 
+    }
+  }
+
   depends_on = [data.google_client_config.current]
 
-#---------------------------------------------------------------------------------------
-# Computer Image
-#---------------------------------------------------------------------------------------
+  #---------------------------------------------------------------------------------------
+  # Computer Image
+  #---------------------------------------------------------------------------------------
   boot_disk {
     initialize_params {
       image = data.hcp_packer_image.ubuntu_gcp.cloud_image_id
     }
   }
- # scratch_disk {
+  # scratch_disk {
   #  interface = "SCSI"
   #}
 
-scheduling {
-  on_host_maintenance = "MIGRATE"
-  automatic_restart   =  true
-}
+  scheduling {
+    on_host_maintenance = "MIGRATE"
+    automatic_restart   = true
+  }
 
 
-# service account
+  # service account
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
- tags = ["web-server"]
-} 
- 
+  tags = ["web-server"]
+}
+
 #---------------------------------------------------------------------------------------
 # IP Address
 #---------------------------------------------------------------------------------------
@@ -88,14 +88,11 @@ resource "google_compute_address" "internal_reserved_subnet_ip" {
 #resource "google_compute_address" "static" {
 #  name = "ipv4-address"
 #}
- 
-  
-output "ip" {
- value = google_compute_instance.terra_instance.network_interface.0.access_config.0.nat_ip
-}
 
-  
-  
+
+
+
+
 
 
 
