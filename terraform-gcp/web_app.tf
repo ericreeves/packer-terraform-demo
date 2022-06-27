@@ -21,10 +21,11 @@ data "hcp_packer_image" "ubuntu_gcp" {
   region         = var.zone
 }
 
+
 #---------------------------------------------------------------------------------------
 # Instances
 #---------------------------------------------------------------------------------------
-resource "google_compute_instance" "terra_instance" {
+resource "google_compute_instance" "terraform_instance" {
   name         = var.instances_name
   hostname     = var.hostname
   project      = data.google_client_config.current.project
@@ -36,8 +37,8 @@ resource "google_compute_instance" "terra_instance" {
   }
 
   network_interface {
-    network            = google_compute_network.terra_vpc.self_link
-    subnetwork         = google_compute_subnetwork.terra_sub.self_link
+    network            = google_compute_network.terraform_vpc.self_link
+    subnetwork         = google_compute_subnetwork.terraform_sub.self_link
     subnetwork_project = data.google_client_config.current.project
     network_ip         = var.private_ip
 
@@ -47,6 +48,7 @@ resource "google_compute_instance" "terra_instance" {
   }
 
   depends_on = [data.google_client_config.current]
+
 
   #---------------------------------------------------------------------------------------
   # Computer Image
@@ -73,13 +75,14 @@ resource "google_compute_instance" "terra_instance" {
   tags = ["web-server"]
 }
 
+
 #---------------------------------------------------------------------------------------
 # IP Address
 #---------------------------------------------------------------------------------------
 # Reserving a static internal IP address 
 resource "google_compute_address" "internal_reserved_subnet_ip" {
   name         = "internal-address"
-  subnetwork   = google_compute_subnetwork.terra_sub.id
+  subnetwork   = google_compute_subnetwork.terraform_sub.id
   address_type = "INTERNAL"
   address      = var.private_ip
   region       = var.region
@@ -88,12 +91,3 @@ resource "google_compute_address" "internal_reserved_subnet_ip" {
 #resource "google_compute_address" "static" {
 #  name = "ipv4-address"
 #}
-
-
-
-
-
-
-
-
-

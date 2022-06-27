@@ -38,6 +38,7 @@ variable "hcp_bucket_name_base" {
   default = "acme-base"
 }
 
+
 #---------------------------------------------------------------------------------------
 # HCP Packer Registry
 # - Base Image Bucket and Channel
@@ -67,7 +68,7 @@ variable "gce_zone" {
 # Retrieve Latest Iteration ID for packer-terraform-demo/gce
 data "hcp-packer-image" "gce" {
   cloud_provider = "gce"
-  # The key is "region", but in GCE it actually wants the "zone"
+  # The key is named "region", but in GCE it actually wants the "zone"
   region       = var.gce_zone
   bucket_name  = var.hcp_bucket_name_base
   iteration_id = data.hcp-packer-iteration.acme-base.id
@@ -81,11 +82,11 @@ source "googlecompute" "acme-webapp" {
   ssh_username = "ubuntu"
 }
 
+
 #---------------------------------------------------------------------------------------
 # Common Build Definition
 #---------------------------------------------------------------------------------------
 build {
-
   hcp_packer_registry {
     bucket_name = var.hcp_bucket_name
     description = <<EOT
@@ -118,5 +119,4 @@ This is the Acme Base + Our "Application" (html)
   provisioner "shell" {
     inline = ["bash /tmp/deploy-app.sh"]
   }
-
 }

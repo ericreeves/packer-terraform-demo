@@ -16,41 +16,38 @@
 #---------------------------------------------------------------------------------------
 # VPC
 #---------------------------------------------------------------------------------------
-resource "google_compute_network" "terra_vpc" {
+resource "google_compute_network" "terraform_vpc" {
   project                 = data.google_client_config.current.project
-  name                    = "terra-vpc"
+  name                    = "terraform-vpc"
   auto_create_subnetworks = false
 }
+
 
 #---------------------------------------------------------------------------------------
 # Subnet
 #---------------------------------------------------------------------------------------
-resource "google_compute_subnetwork" "terra_sub" {
-  name                     = "terra-sub"
+resource "google_compute_subnetwork" "terraform_sub" {
+  name                     = var.subnet_name
   ip_cidr_range            = var.subnet_cidr
   region                   = var.region
-  network                  = google_compute_network.terra_vpc.name
-  description              = "This is a custom subnet "
+  network                  = google_compute_network.terraform_vpc.name
+  description              = "Terraform Demo Subnet"
   private_ip_google_access = "true"
-  # log_config {
-  #   aggregation_interval = "INTERVAL_10_MIN"
-  #   flow_sampling        = 0.5
-  #   metadata             = "INCLUDE_ALL_METADATA"
-  # }   
 
-  secondary_ip_range {
-    range_name    = "subnet-01-secondary-01"
-    ip_cidr_range = "192.168.64.0/24"
-  }
+  # secondary_ip_range {
+  #   range_name    = "subnet-01-secondary-01"
+  #   ip_cidr_range = var.secondary_cidr
+  # }
 }
+
+
 #---------------------------------------------------------------------------------------
 # Firewall
 #---------------------------------------------------------------------------------------
-# web network tag
 resource "google_compute_firewall" "web-server" {
   project     = data.google_client_config.current.project # you can Replace this with your project ID in quotes var.project_id
   name        = "allow-http-rule"
-  network     = google_compute_network.terra_vpc.name
+  network     = google_compute_network.terraform_vpc.name
   description = "Creates firewall rule targeting tagged instances"
 
   allow {

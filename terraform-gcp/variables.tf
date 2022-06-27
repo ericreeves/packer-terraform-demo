@@ -1,8 +1,4 @@
 #--------------------------------------------------------------------------------------
-# Variables File
-#--------------------------------------------------------------------------------------
-
-#--------------------------------------------------------------------------------------
 # GCP Service account region and authentication 
 #--------------------------------------------------------------------------------------
 variable "gcp_credentials" {
@@ -22,6 +18,7 @@ variable "zone" {
   default = "us-central1-c"
 }
 
+
 #--------------------------------------------------------------------------------------
 # VPC
 #--------------------------------------------------------------------------------------
@@ -29,9 +26,6 @@ variable "vnet_name" {
   default = "terraform-network"
 }
 
-variable "subnet-02_cidr" {
-  default = "192.168.0.0/16"
-}
 
 #--------------------------------------------------------------------------------------
 # Subnets
@@ -43,25 +37,28 @@ variable "subnet_name" {
 variable "subnet_cidr" {
   default = "192.168.10.0/24"
 }
+
+# variable "secondary_cidr" {
+#   default = "192.168.64.0/24"
+# }
+
 variable "firewall_name" {
   default = "terraform-firewall"
 }
 
-
 variable "subnetwork_project" {
-  description = "The project that subnetwork belongs to"
   default     = "eric-terraform"
 }
 
 variable "instances_name" {
-  description = "Number of instances to create. This value is ignored if static_ips is provided."
-  default     = "terravm"
+  default     = "terraform_vm"
 }
 
 variable "admin" {
   description = "OS user"
   default     = "ubuntu"
 }
+
 
 #--------------------------------------------------------------------------------------
 # VNic Configuration
@@ -83,15 +80,10 @@ variable "instance_name" {
   default = "terraform-webapp"
 }
 
-
 variable "osdisk_size" {
   default = "30"
 }
+
 variable "vm_type" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
-  default = "e2-micro" #"f1-micro"
+  default = "e2-micro"
 }
-
-variable "os_image" {
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
-}
-

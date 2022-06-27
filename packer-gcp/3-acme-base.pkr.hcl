@@ -10,6 +10,7 @@ packer {
   }
 }
 
+
 #---------------------------------------------------------------------------------------
 # Common Image Metadata
 #---------------------------------------------------------------------------------------
@@ -24,6 +25,7 @@ variable "image_name" {
 variable "version" {
   default = "2.0.0"
 }
+
 
 #---------------------------------------------------------------------------------------
 # GCE Image Config and Definition
@@ -51,6 +53,7 @@ source "googlecompute" "acme-base" {
   # The AWS Ubuntu image uses user "ubuntu", so we shall do the same here
   ssh_username = "ubuntu"
 }
+
 
 #---------------------------------------------------------------------------------------
 # Common Build Definition
