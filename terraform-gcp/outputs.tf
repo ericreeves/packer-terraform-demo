@@ -15,5 +15,5 @@ output "ubuntu_iteration" {
 }
 
 output "ubuntu_gcp" {
-  value = data.hcp_packer_image.ubuntu_us_east_2
+  value = data.hcp_packer_image.ubuntu_gcp
 }
