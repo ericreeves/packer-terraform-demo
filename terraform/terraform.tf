@@ -11,11 +11,12 @@ terraform {
   }
 
   cloud {
-    organization = "ericreeves-demo"
+    organization = "<UPDATEME - ORGANIZATION NAME>"
+    # For Terraform Enterprise, replace this with the hostname of your TFE instance
     hostname     = "app.terraform.io"
 
     workspaces {
-      name = "packer-terraform-demo"
+      name = "<UPDATEME - WORKSPACE NAME>"
     }
   }
 }

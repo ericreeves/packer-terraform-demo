@@ -54,7 +54,7 @@ data "hcp-packer-iteration" "acme-base" {
 # GCE Image Config and Definition
 #---------------------------------------------------------------------------------------
 variable "gcp_project" {
-  default = "eric-terraform"
+  default = "<UPDATEME - GCP PROJECT NAME>"
 }
 
 variable "gce_region" {

@@ -2,7 +2,7 @@
 # HCP Packer Configuration
 #---------------------------------------------------------------------------------------
 variable "hcp_bucket_name" {
-  default = "acme-base"
+  default = "acme-webapp"
 }
 
 variable "hcp_channel" {
@@ -31,10 +31,6 @@ resource "google_compute_instance" "terraform_instance" {
   project      = var.gcp_project
   zone         = var.zone
   machine_type = var.vm_type
-
-  metadata = {
-    ssh-keys = "${var.admin}:${file("id_rsa.pub")}"
-  }
 
   network_interface {
     network            = google_compute_network.terraform_vpc.self_link

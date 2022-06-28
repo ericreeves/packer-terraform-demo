@@ -2,7 +2,7 @@
 # GCP Project and Region
 #--------------------------------------------------------------------------------------
 variable "gcp_project" {
-  default = "eric-terraform"
+  default = "<UPDATEME - GCP PROJECT NAME>"
 }
 
 variable "region" {
@@ -37,10 +37,6 @@ variable "firewall_name" {
   default = "terraform-firewall"
 }
 
-variable "subnetwork_project" {
-  default     = "eric-terraform"
-}
-
 variable "instances_name" {
   default     = "terraformvm"
 }
@@ -60,7 +56,7 @@ variable "private_ip" {
 
 variable "hostname" {
   description = "Hostname of instances"
-  default     = "web-app-1.alluvium.com"
+  default     = "web-app-1.acme.com"
 }
 
 

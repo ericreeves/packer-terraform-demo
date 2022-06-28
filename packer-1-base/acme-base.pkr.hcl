@@ -23,7 +23,7 @@ variable "image_name" {
 }
 
 variable "version" {
-  default = "2.0.0"
+  default = "1.0.0"
 }
 
 
@@ -31,7 +31,7 @@ variable "version" {
 # GCE Image Config and Definition
 #---------------------------------------------------------------------------------------
 variable "gcp_project" {
-  default = "eric-terraform"
+  default = "<UPDATEME - GCP PROJECT NAME>"
 }
 
 variable "gce_region" {
@@ -63,7 +63,7 @@ build {
   hcp_packer_registry {
     bucket_name = var.hcp_bucket_name
     description = <<EOT
-This is the base Ubuntu image + Our "Platform" (nginx)
+This is the base Ubuntu image + Our "Platform" (apache2)
     EOT
     bucket_labels = {
       "owner"          = "platform-team"
@@ -87,10 +87,9 @@ This is the base Ubuntu image + Our "Platform" (nginx)
     inline = [
       "sleep 10",
       "sudo apt -y update",
-      "sudo apt -y install nginx",
-      "sudo ufw allow 'Nginx HTTP'",
-      "sudo systemctl enable nginx",
-      "sudo systemctl status nginx",
+      "sudo apt -y install apache2",
+      "sudo systemctl enable apache2",
+      "sudo systemctl start apache2",
       "sudo chown -R ubuntu:ubuntu /var/www/html",
     ]
 

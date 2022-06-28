@@ -14,39 +14,16 @@ packer {
 #---------------------------------------------------------------------------------------
 # Common Image Metadata
 #---------------------------------------------------------------------------------------
-variable "image_name" {
-  default = "acme-webapp"
-}
-
-variable "version" {
-  default = "1.0.0"
-}
-
-variable "hcp_bucket_name_base" {
+variable "hcp_bucket_name" {
   default = "acme-base"
 }
 
-variable "hcp_channel_base" {
-  default = "production"
+variable "image_name" {
+  default = "acme-base"
 }
 
-variable "hcp_bucket_name_webapp" {
-  default = "acme-webapp"
-}
-
-variable "hcp_channel_webapp" {
-  default = "production"
-}
-
-
-#---------------------------------------------------------------------------------------
-# HCP Packer Registry
-# - Base Image Bucket and Channel
-#---------------------------------------------------------------------------------------
-# Returh the most recent Iteration (or build) of an image, given a Channel
-data "hcp-packer-iteration" "acme-base" {
-  bucket_name = var.hcp_bucket_name_base
-  channel     = var.hcp_channel_base
+variable "version" {
+  default = "2.0.0"
 }
 
 
@@ -54,7 +31,7 @@ data "hcp-packer-iteration" "acme-base" {
 # GCE Image Config and Definition
 #---------------------------------------------------------------------------------------
 variable "gcp_project" {
-  default = "eric-terraform"
+  default = "<UPDATEME - GCP PROJECT NAME>"
 }
 
 variable "gce_region" {
@@ -65,18 +42,13 @@ variable "gce_zone" {
   default = "us-central1-c"
 }
 
-# Retrieve Latest Iteration ID for packer-terraform-demo/gce
-data "hcp-packer-image" "gce" {
-  cloud_provider = "gce"
-  # The key is named "region", but in GCE it actually wants the "zone"
-  region       = var.gce_zone
-  bucket_name  = var.hcp_bucket_name_base
-  iteration_id = data.hcp-packer-iteration.acme-base.id
+variable "gce_source_image" {
+  default = "ubuntu-2004-focal-v20220615"
 }
 
-source "googlecompute" "acme-webapp" {
+source "googlecompute" "acme-base" {
   project_id   = var.gcp_project
-  source_image = data.hcp-packer-image.gce.id
+  source_image = var.gce_source_image
   zone         = var.gce_zone
   # The AWS Ubuntu image uses user "ubuntu", so we shall do the same here
   ssh_username = "ubuntu"
@@ -87,13 +59,14 @@ source "googlecompute" "acme-webapp" {
 # Common Build Definition
 #---------------------------------------------------------------------------------------
 build {
+
   hcp_packer_registry {
-    bucket_name = var.hcp_bucket_name_webapp
+    bucket_name = var.hcp_bucket_name
     description = <<EOT
-This is the Acme Base + Our "Application" (html)
+This is the base Ubuntu image + Our "Platform" (nginx)
     EOT
     bucket_labels = {
-      "owner"          = "application-team"
+      "owner"          = "platform-team"
       "os"             = "Ubuntu"
       "ubuntu-version" = "Focal 20.04"
       "image-name"     = var.image_name
@@ -102,21 +75,24 @@ This is the Acme Base + Our "Application" (html)
     build_labels = {
       "build-time"        = timestamp()
       "build-source"      = basename(path.cwd)
-      "acme-base-version" = data.hcp-packer-image.gce.labels.acme-base-version
-      "acme-app-version"  = var.version
+      "acme-base-version" = var.version
     }
   }
 
   sources = [
-    "sources.googlecompute.acme-webapp"
+    "sources.googlecompute.acme-base"
   ]
 
-  provisioner "file" {
-    source      = "files/deploy-app.sh"
-    destination = "/tmp/deploy-app.sh"
-  }
-
   provisioner "shell" {
-    inline = ["bash /tmp/deploy-app.sh"]
+    inline = [
+      "sleep 10",
+      "sudo apt -y update",
+      "sudo apt -y install nginx",
+      "sudo ufw allow 'Nginx HTTP'",
+      "sudo systemctl enable nginx",
+      "sudo systemctl status nginx",
+      "sudo chown -R ubuntu:ubuntu /var/www/html",
+    ]
+
   }
 }
