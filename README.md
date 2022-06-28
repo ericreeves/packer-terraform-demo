@@ -88,6 +88,7 @@ Use Terraform to deploy the new development application image.
   - Set Variable *hcp_channel* to *development*
 - ```terraform plan```
 - ```terraform apply```
+- View cat pictures in the URL output by Terraform.
 
 ### Promote Development Images to Production
 
