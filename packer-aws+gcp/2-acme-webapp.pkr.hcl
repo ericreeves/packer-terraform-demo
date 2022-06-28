@@ -80,7 +80,7 @@ source "amazon-ebs" "acme-webapp" {
 #--------------------------------------------------
 # GCE Image Config and Definition
 #--------------------------------------------------
-variable "gcp_project_id" {
+variable "gcp_project" {
   default = "eric-terraform"
 }
 
@@ -102,7 +102,7 @@ data "hcp-packer-image" "gce" {
 }
 
 source "googlecompute" "acme-webapp" {
-  project_id = var.gcp_project_id
+  project_id = var.gcp_project
   source_image = data.hcp-packer-image.gce.id
   zone = var.gce_zone
   # The AWS Ubuntu image uses user "ubuntu", so we shall do the same here

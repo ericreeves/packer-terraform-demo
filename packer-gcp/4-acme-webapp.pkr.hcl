@@ -18,24 +18,24 @@ variable "image_name" {
   default = "acme-webapp"
 }
 
-variable "hcp_bucket_name" {
-  default = "acme-webapp"
-}
-
 variable "version" {
   default = "2.0.0"
+}
+
+variable "hcp_bucket_name_base" {
+  default = "acme-base"
 }
 
 variable "hcp_channel_base" {
   default = "development"
 }
 
-variable "hcp_channel_webapp" {
-  default = "development"
+variable "hcp_bucket_name_webapp" {
+  default = "acme-webapp"
 }
 
-variable "hcp_bucket_name_base" {
-  default = "acme-base"
+variable "hcp_channel_webapp" {
+  default = "development"
 }
 
 
@@ -53,7 +53,7 @@ data "hcp-packer-iteration" "acme-base" {
 #---------------------------------------------------------------------------------------
 # GCE Image Config and Definition
 #---------------------------------------------------------------------------------------
-variable "gcp_project_id" {
+variable "gcp_project" {
   default = "eric-terraform"
 }
 
@@ -75,7 +75,7 @@ data "hcp-packer-image" "gce" {
 }
 
 source "googlecompute" "acme-webapp" {
-  project_id   = var.gcp_project_id
+  project_id   = var.gcp_project
   source_image = data.hcp-packer-image.gce.id
   zone         = var.gce_zone
   # The AWS Ubuntu image uses user "ubuntu", so we shall do the same here
@@ -88,7 +88,7 @@ source "googlecompute" "acme-webapp" {
 #---------------------------------------------------------------------------------------
 build {
   hcp_packer_registry {
-    bucket_name = var.hcp_bucket_name
+    bucket_name = var.hcp_bucket_name_webapp
     description = <<EOT
 This is the Acme Base + Our "Application" (html)
     EOT
@@ -102,7 +102,7 @@ This is the Acme Base + Our "Application" (html)
     build_labels = {
       "build-time"        = timestamp()
       "build-source"      = basename(path.cwd)
-      "acme-base-version" = data.hcp-packer-iteration.acme-base.id
+      "acme-base-version" = data.hcp-packer-image.gce.labels.acme-base-version
       "acme-app-version"  = var.version
     }
   }

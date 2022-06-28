@@ -30,7 +30,7 @@ variable "version" {
 #---------------------------------------------------------------------------------------
 # GCE Image Config and Definition
 #---------------------------------------------------------------------------------------
-variable "gcp_project_id" {
+variable "gcp_project" {
   default = "eric-terraform"
 }
 
@@ -47,7 +47,7 @@ variable "gce_source_image" {
 }
 
 source "googlecompute" "acme-base" {
-  project_id   = var.gcp_project_id
+  project_id   = var.gcp_project
   source_image = var.gce_source_image
   zone         = var.gce_zone
   # The AWS Ubuntu image uses user "ubuntu", so we shall do the same here

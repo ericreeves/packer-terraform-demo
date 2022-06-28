@@ -15,7 +15,7 @@ data "hcp_packer_iteration" "ubuntu" {
 }
 
 data "hcp_packer_image" "ubuntu_gcp" {
-  bucket_name    = "acme-base"
+  bucket_name    = var.hcp_bucket_name
   cloud_provider = "gce"
   iteration_id   = data.hcp_packer_iteration.ubuntu.ulid
   region         = var.zone
@@ -28,7 +28,7 @@ data "hcp_packer_image" "ubuntu_gcp" {
 resource "google_compute_instance" "terraform_instance" {
   name         = var.instances_name
   hostname     = var.hostname
-  project      = data.google_client_config.current.project
+  project      = var.gcp_project
   zone         = var.zone
   machine_type = var.vm_type
 
@@ -39,15 +39,13 @@ resource "google_compute_instance" "terraform_instance" {
   network_interface {
     network            = google_compute_network.terraform_vpc.self_link
     subnetwork         = google_compute_subnetwork.terraform_sub.self_link
-    subnetwork_project = data.google_client_config.current.project
+    subnetwork_project = var.gcp_project
     network_ip         = var.private_ip
 
     access_config {
       // Include this section to give the VM an external ip address
     }
   }
-
-  depends_on = [data.google_client_config.current]
 
 
   #---------------------------------------------------------------------------------------

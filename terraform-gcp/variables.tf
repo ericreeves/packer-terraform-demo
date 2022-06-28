@@ -1,12 +1,7 @@
 #--------------------------------------------------------------------------------------
-# GCP Service account region and authentication 
+# GCP Project and Region
 #--------------------------------------------------------------------------------------
-variable "gcp_credentials" {
-  description = "Service Account JSON Key File"
-  default     = "gcp-key.json"
-}
-
-variable "project" {
+variable "gcp_project" {
   default = "eric-terraform"
 }
 
@@ -38,10 +33,6 @@ variable "subnet_cidr" {
   default = "192.168.10.0/24"
 }
 
-# variable "secondary_cidr" {
-#   default = "192.168.64.0/24"
-# }
-
 variable "firewall_name" {
   default = "terraform-firewall"
 }
@@ -51,7 +42,7 @@ variable "subnetwork_project" {
 }
 
 variable "instances_name" {
-  default     = "terraform_vm"
+  default     = "terraformvm"
 }
 
 variable "admin" {
