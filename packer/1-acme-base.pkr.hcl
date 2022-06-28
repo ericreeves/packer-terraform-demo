@@ -85,8 +85,7 @@ This is the base Ubuntu image + Our "Platform" (apache2)
 
   provisioner "shell" {
     inline = [
-      "sudo apt -y update",
-      "sleep 15",
+      "sleep 10",
       "sudo apt -y update",
       "sudo apt -y install apache2",
       "sudo systemctl enable apache2",
