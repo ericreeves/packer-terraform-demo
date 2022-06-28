@@ -84,7 +84,7 @@ This build uses the new development base image and deploys our application (crea
 Use Terraform to deploy the new development application image.
 
 - ```cd terraform```
-- Open web_app.tf in an editor.
+- Open *web_app.tf* in an editor.
   - Set Variable *hcp_channel* to *development*
 - ```terraform plan```
 - ```terraform apply```
@@ -94,7 +94,7 @@ Use Terraform to deploy the new development application image.
 
 Testing has been completed and it is time to promote the development base image to production.
 
-(This stage is not represented in the demo code.)
+(This stage is not represented by distinct files in the demo code.)
 
 - Update the *production* Iteration for *acme-base*, and assign the tested Iteration to it.
 - Update *acme-webapp.pkr.hcl* and set *hcp_channel_base* to *production*.
@@ -102,6 +102,7 @@ Testing has been completed and it is time to promote the development base image 
 - Update *web_app.tf* and set *hcp_channel* to *production*.
 - ```terraform plan```
 - ```terraform apply```
+- View cat pictures in the URL output by Terraform.
 - Profit!
 
 ### Various repositories were borrowed from to construct this demo.
