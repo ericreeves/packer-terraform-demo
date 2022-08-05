@@ -3,9 +3,9 @@
 #---------------------------------------------------------------------------------------
 packer {
   required_plugins {
-    googlecompute = {
-      version = ">= 0.0.1"
-      source  = "github.com/hashicorp/googlecompute"
+    amazon = {
+      version = ">= 1.0.1"
+      source  = "github.com/hashicorp/amazon"
     }
   }
 }
@@ -27,31 +27,29 @@ variable "version" {
 }
 
 
-#---------------------------------------------------------------------------------------
-# GCE Image Config and Definition
-#---------------------------------------------------------------------------------------
-variable "gcp_project" {
-  default = "<UPDATEME - GCP PROJECT NAME>"
+#--------------------------------------------------
+# AWS Image Config and Definition
+#--------------------------------------------------
+variable "aws_region" {
+  default = "us-east-2"
 }
 
-variable "gce_region" {
-  default = "us-central1"
+data "amazon-ami" "aws_base" {
+  region = var.aws_region
+  filters = {
+    name = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
+  }
+  most_recent = true
+  owners      = ["099720109477"]
 }
 
-variable "gce_zone" {
-  default = "us-central1-c"
-}
-
-variable "gce_source_image" {
-  default = "ubuntu-2004-focal-v20220615"
-}
-
-source "googlecompute" "acme-base" {
-  project_id   = var.gcp_project
-  source_image = var.gce_source_image
-  zone         = var.gce_zone
-  # The AWS Ubuntu image uses user "ubuntu", so we shall do the same here
-  ssh_username = "ubuntu"
+source "amazon-ebs" "acme-base" {
+  region         = var.aws_region
+  source_ami     = data.amazon-ami.aws_base.id
+  instance_type  = "t2.small"
+  ssh_username   = "ubuntu"
+  ssh_agent_auth = false
+  ami_name       = "packer_aws_{{timestamp}}_${var.image_name}_v${var.version}"
 }
 
 
@@ -80,7 +78,7 @@ This is the base Ubuntu image + Our "Platform" (apache2)
   }
 
   sources = [
-    "sources.googlecompute.acme-base"
+    "sources.amazon-ebs.acme-base"
   ]
 
   provisioner "shell" {
