@@ -13,6 +13,7 @@ This repository contains the Packer and Terraform HCL definitions for a basic en
   - HCP_CLIENT_SECRET (sensitive)
   - AWS_ACCESS_KEY_ID
   - AWS_SECRET_ACCESS_KEY (sensitive)
+  - AWS_DEFAULT_REGION
 - Create an "HCP-Packer" Run Task in your Terraform Cloud Organization
   - Retrieve the "Endpoint URL" and "HMAC Key" from the HCP Packer / "Integrate with Terraform Cloud" page under portal.cloud.hashicorp.com
 - Create a Workspace in Terraform Cloud
