@@ -9,15 +9,15 @@ variable "hcp_channel" {
   default = "production"
 }
 
-data "hcp_packer_iteration" "ubuntu" {
+data "hcp_packer_iteration" "acme-webapp" {
   bucket_name = var.hcp_bucket_name
   channel     = var.hcp_channel
 }
 
-data "hcp_packer_image" "ubuntu_gcp" {
+data "hcp_packer_image" "acme-webapp" {
   bucket_name    = var.hcp_bucket_name
-  cloud_provider = "gce"
-  iteration_id   = data.hcp_packer_iteration.ubuntu.ulid
+  cloud_provider = var.cloud_provider
+  iteration_id   = data.hcp_packer_iteration.acme-webapp.ulid
   region         = var.zone
 }
 
@@ -49,7 +49,7 @@ resource "google_compute_instance" "terraform_instance" {
   #---------------------------------------------------------------------------------------
   boot_disk {
     initialize_params {
-      image = data.hcp_packer_image.ubuntu_gcp.cloud_image_id
+      image = data.hcp_packer_image.acme-webapp.cloud_image_id
     }
   }
   # scratch_disk {

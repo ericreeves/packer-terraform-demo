@@ -1,6 +1,10 @@
 #--------------------------------------------------------------------------------------
 # GCP Project and Region
 #--------------------------------------------------------------------------------------
+variable "cloud_provider" {
+  default = "gce"
+}
+
 variable "gcp_project" {
   default = "<UPDATEME - GCP PROJECT NAME>"
 }
@@ -38,7 +42,7 @@ variable "firewall_name" {
 }
 
 variable "instances_name" {
-  default     = "terraformvm"
+  default = "terraformvm"
 }
 
 variable "admin" {
@@ -71,6 +75,6 @@ variable "osdisk_size" {
   default = "30"
 }
 
-variable "vm_type" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
+variable "vm_type" { # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
   default = "e2-micro"
 }
