@@ -97,7 +97,7 @@ Testing has been completed and it is time to promote the development base image 
 (This stage is not represented by distinct files in the demo code.)
 
 - Update the *production* Iteration for *acme-base*, and assign the tested Iteration to it.
-- Update *acme-webapp.pkr.hcl* and set *hcp_channel_base* to *production*.
+- Update *acme-webapp.pkr.hcl* and set *hcp_base_channel* to *production*.
 - ```HCP_PACKER_BUILD_FINGERPRINT="$(date +%s)" packer build acme-webapp.pkr.hcl```
 - Update *web_app.tf* and set *hcp_channel* to *production*.
 - ```terraform plan```

@@ -14,7 +14,7 @@ packer {
 #---------------------------------------------------------------------------------------
 # Common Image Metadata
 #---------------------------------------------------------------------------------------
-variable "hcp_bucket_name" {
+variable "hcp_base_bucket" {
   default = "acme-base"
 }
 
@@ -59,7 +59,7 @@ source "amazon-ebs" "acme-base" {
 build {
 
   hcp_packer_registry {
-    bucket_name = var.hcp_bucket_name
+    bucket_name = var.hcp_base_bucket
     description = <<EOT
 This is the base Ubuntu image + Our "Platform" (nginx)
     EOT
