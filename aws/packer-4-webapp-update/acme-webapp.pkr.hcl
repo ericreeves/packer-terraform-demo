@@ -38,18 +38,6 @@ variable "hcp_webapp_channel" {
   default = "development"
 }
 
-
-#--------------------------------------------------
-# HCP Packer Registry
-# - Base Image Bucket and Channel
-#--------------------------------------------------
-# Returh the most recent Iteration (or build) of an image, given a Channel
-data "hcp-packer-iteration" "acme-base" {
-  bucket_name = var.hcp_base_bucket
-  channel     = var.hcp_base_channel
-}
-
-
 #--------------------------------------------------
 # AWS Image Config and Definition
 #--------------------------------------------------
@@ -61,7 +49,7 @@ data "hcp-packer-image" "aws" {
   cloud_provider = "aws"
   region         = var.aws_region
   bucket_name    = var.hcp_base_bucket
-  iteration_id   = data.hcp-packer-iteration.acme-base.id
+  channel        = var.hcp_base_channel
 }
 
 source "amazon-ebs" "acme-webapp" {
