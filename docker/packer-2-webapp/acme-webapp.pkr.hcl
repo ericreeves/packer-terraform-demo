@@ -22,19 +22,19 @@ variable "hcp_bucket_name" {
   default = "acme-webapp"
 }
 
-variable "hcp_bucket_name_base" {
+variable "hcp_base_bucket" {
   default = "acme-base"
 }
 
-variable "hcp_channel_base" {
+variable "hcp_base_channel" {
   default = "docker"
 }
 
-variable "hcp_bucket_name_webapp" {
+variable "hcp_webapp_bucket" {
   default = "acme-webapp"
 }
 
-variable "hcp_channel_webapp" {
+variable "hcp_webapp_channel" {
   default = "docker"
 }
 

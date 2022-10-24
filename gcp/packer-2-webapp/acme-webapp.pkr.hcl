@@ -22,19 +22,19 @@ variable "version" {
   default = "1.0.0"
 }
 
-variable "hcp_bucket_name_base" {
+variable "hcp_base_bucket" {
   default = "acme-base"
 }
 
-variable "hcp_channel_base" {
+variable "hcp_base_channel" {
   default = "production"
 }
 
-variable "hcp_bucket_name_webapp" {
+variable "hcp_webapp_bucket" {
   default = "acme-webapp"
 }
 
-variable "hcp_channel_webapp" {
+variable "hcp_webapp_channel" {
   default = "production"
 }
 
@@ -45,8 +45,8 @@ variable "hcp_channel_webapp" {
 #---------------------------------------------------------------------------------------
 # Returh the most recent Iteration (or build) of an image, given a Channel
 data "hcp-packer-iteration" "acme-base" {
-  bucket_name = var.hcp_bucket_name_base
-  channel     = var.hcp_channel_base
+  bucket_name = var.hcp_base_bucket
+  channel     = var.hcp_base_channel
 }
 
 
@@ -70,7 +70,7 @@ data "hcp-packer-image" "gce" {
   cloud_provider = "gce"
   # The key is named "region", but in GCE it actually wants the "zone"
   region       = var.gce_zone
-  bucket_name  = var.hcp_bucket_name_base
+  bucket_name  = var.hcp_base_bucket
   iteration_id = data.hcp-packer-iteration.acme-base.id
 }
 
@@ -88,7 +88,7 @@ source "googlecompute" "acme-webapp" {
 #---------------------------------------------------------------------------------------
 build {
   hcp_packer_registry {
-    bucket_name = var.hcp_bucket_name_webapp
+    bucket_name = var.hcp_webapp_bucket
     description = <<EOT
 This is the Acme Base + Our "Application" (html)
     EOT
