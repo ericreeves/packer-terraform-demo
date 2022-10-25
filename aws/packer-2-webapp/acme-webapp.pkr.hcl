@@ -45,11 +45,6 @@ variable "aws_region" {
   default = "us-east-2"
 }
 
-data "hcp-packer-iteration" "acme-base" {
-  bucket_name = var.hcp_base_bucket
-  channel     = var.hcp_base_channel
-}
-
 data "hcp-packer-image" "aws" {
   cloud_provider = "aws"
   region         = var.aws_region
