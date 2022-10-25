@@ -6,7 +6,7 @@ data "hcp_packer_iteration" "web" {
   channel     = "production"
 }
 
-data "hcp_packer_image" "acme_us_east_2" {
+data "hcp_packer_image" "webapp_image" {
   bucket_name    = "acme-webapp"
   cloud_provider = "aws"
   iteration_id   = data.hcp_packer_iteration.web.ulid
@@ -14,7 +14,7 @@ data "hcp_packer_image" "acme_us_east_2" {
 }
 
 resource "aws_instance" "acme" {
-  ami                         = data.hcp_packer_image.acme_us_east_2.cloud_image_id
+  ami                         = data.hcp_packer_image.webapp_image.cloud_image_id
   instance_type               = var.instance_type
   key_name                    = aws_key_pair.acme.key_name
   associate_public_ip_address = true
@@ -23,6 +23,13 @@ resource "aws_instance" "acme" {
 
   tags = {
     Name = "${var.prefix}-AcmeCo-Web-App"
+  }
+
+  lifecycle {
+    postcondition {
+      condition     = self.ami == data.hcp_packer_image.webapp_image.cloud_image_id
+      error_message = "Must use the latest available AMI, ${data.hcp_packer_image.webapp_image.cloud_image_id}."
+    }
   }
 }
 

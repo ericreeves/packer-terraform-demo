@@ -6,7 +6,7 @@ data "hcp_packer_iteration" "ubuntu" {
   channel     = "production"
 }
 
-data "hcp_packer_image" "acme_us_east_2" {
+data "hcp_packer_image" "webapp_image" {
   bucket_name    = "packer-terraform-demo"
   cloud_provider = "aws"
   iteration_id   = data.hcp_packer_iteration.ubuntu.ulid
@@ -14,7 +14,7 @@ data "hcp_packer_image" "acme_us_east_2" {
 }
 
 resource "aws_instance" "acme" {
-  ami                         = data.hcp_packer_image.acme_us_east_2.cloud_image_id
+  ami                         = data.hcp_packer_image.webapp_image.cloud_image_id
   instance_type               = var.instance_type
   key_name                    = aws_key_pair.acme.key_name
   associate_public_ip_address = true

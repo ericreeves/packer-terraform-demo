@@ -2,8 +2,8 @@ output "ubuntu_iteration" {
   value = data.hcp_packer_iteration.ubuntu
 }
 
-output "acme_us_east_2" {
-  value = data.hcp_packer_image.acme_us_east_2
+output "webapp_image" {
+  value = data.hcp_packer_image.webapp_image
 }
 
 output "catapp_url" {
