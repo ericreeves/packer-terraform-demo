@@ -27,7 +27,7 @@ variable "hcp_base_bucket" {
 }
 
 variable "hcp_base_channel" {
-  default = "development"
+  default = "production"
 }
 
 variable "hcp_webapp_bucket" {
@@ -35,7 +35,7 @@ variable "hcp_webapp_bucket" {
 }
 
 variable "hcp_webapp_channel" {
-  default = "development"
+  default = "production"
 }
 
 #--------------------------------------------------
