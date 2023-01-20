@@ -1,0 +1,7 @@
+prefix         = "eric-demo" # must contain only lowercase alphanumeric characters, numbers and hyphens, must start with a letter
+location       = "centralus"
+env            = "dev"
+department     = "PlatformEng"
+owner          = "web.developer"
+packer_bucket  = "ubuntu-nginx"
+packer_channel = "development"

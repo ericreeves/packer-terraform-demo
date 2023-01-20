@@ -7,7 +7,7 @@ This repository contains the Packer and Terraform HCL definitions for a basic en
 Demos for various cloud providers are stored in separate folders, so that you can use the demo that will resonate best with the customer based upon their primary use case.
 
 - aws/ - AWS
+- azure/ - Azure
 - gcp/ - GCP
-- docker/ - Local Docker
-- azure/ - ... not here yet.  Pull requests are welcome.  :)
+- docker/ - Local Docker (not complete!)
 
