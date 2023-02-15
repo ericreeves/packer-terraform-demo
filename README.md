@@ -1,4 +1,4 @@
-## HCP Packer and Terraform Demo in GCP
+## HCP Packer and Terraform Demos
 
 This repository contains the Packer and Terraform HCL definitions for a basic end-to-end demonstration of HCP Packer and Terraform Cloud.
 
