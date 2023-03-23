@@ -31,7 +31,7 @@ variable "version" {
 # AWS Image Config and Definition
 #--------------------------------------------------
 variable "aws_region" {
-  default = "us-east-2"
+  default = "us-west-2"
 }
 
 data "amazon-ami" "aws_base" {

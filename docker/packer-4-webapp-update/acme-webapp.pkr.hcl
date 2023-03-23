@@ -54,7 +54,7 @@ data "hcp-packer-iteration" "acme-base" {
 # AWS Image Config and Definition
 #--------------------------------------------------
 variable "aws_region" {
-  default = "us-east-2"
+  default = "us-west-2"
 }
 
 data "hcp-packer-image" "aws" {

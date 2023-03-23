@@ -10,7 +10,7 @@ data "hcp_packer_image" "webapp_image" {
   bucket_name    = "packer-terraform-demo"
   cloud_provider = "aws"
   iteration_id   = data.hcp_packer_iteration.ubuntu.ulid
-  region         = "us-east-2"
+  region         = "us-west-2"
 }
 
 resource "aws_instance" "acme" {
