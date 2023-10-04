@@ -13,6 +13,7 @@ locals {
     owner       = var.owner
     application = "HashiCafe website"
   }
+  local_prefix_clean = replace(var.prefix, "_", "-")
 }
 
 resource "azurerm_resource_group" "hashicafe" {
@@ -101,7 +102,7 @@ resource "azurerm_public_ip" "hashicafe" {
   location            = var.location
   resource_group_name = azurerm_resource_group.hashicafe.name
   allocation_method   = "Dynamic"
-  domain_name_label   = "${var.prefix}-app"
+  domain_name_label   = local.local_prefix_clean
 }
 
 resource "azurerm_linux_virtual_machine" "hashicafe" {
@@ -120,7 +121,7 @@ resource "azurerm_linux_virtual_machine" "hashicafe" {
     caching              = "ReadWrite"
   }
 
-  computer_name  = var.prefix
+  computer_name  = "${local.local_prefix_clean}-vm"
   admin_username = var.admin_username
   admin_password = var.admin_password
 

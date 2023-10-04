@@ -14,7 +14,7 @@ terraform {
     hostname     = "app.terraform.io"
 
     workspaces {
-      name = "packer-azure-pre"
+      name = "packer-azure-init"
     }
   }
 }
